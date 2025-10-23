@@ -1,26 +1,79 @@
-## Custom doctrine migrations schema generation
+# Custom Doctrine Migrations Schema Generation
 
-This package allows to add custom schema generation logic,  
-that will be included in `doctrine:migrations:diff`,   
-and will persist between updates of schema.
+This package provides a flexible way to introduce **custom schema generation logic** that integrates seamlessly with the `doctrine:migrations:diff` command.  
+Custom changes applied through this mechanism will **persist across schema updates**, ensuring your modifications are retained automatically.
 
-### Symfony usage
+---
 
-First register the bundle in your `bundles.php`:
+## Symfony Integration
+
+### 1. Register the Bundle
+
+Add the bundle to your `config/bundles.php` file:
 
 ```php
-    SunnyFlail\DoctrineMigrationSchemaUpdater\Symfony\DoctrineSchemaUpdaterBundle::class => ['dev' => true],
+SunnyFlail\DoctrineMigrationSchemaUpdater\Symfony\DoctrineSchemaUpdaterBundle::class => ['dev' => true],
 ```
 
-Now it will be ready to work, but it won't do any difference out of the box.
+Once registered, the bundle is active — but note that it does not alter your schema by default.
 
-The bundle ships by default with one Schema Updater   
-`SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\EmbeddableSchemaUpdater`
-it is configured by default to be injected, but it requires some further configuration.
-If you want to edit a schema that is generated for each class having an embedded object, then create a
-service implementing `SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\UpdateEmbeddableSchemaInterface`
-and tag it with `doctrine.migrations.embeddable_schema_updater`.
-If you want to implement a schema updated with bigger capabilities,
-then implement `SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\SchemaUpdaterInterface` and tag it with `doctrine.migrations.schema_updater`.
+---
 
-On more detailed configuration, see `SunnyFlail\DoctrineMigrationSchemaUpdater\Symfony\DependencyInjection\CompilerPass\CustomConfigureDependencyFactoryPass`.
+### 2. Default Schema Updater
+
+The bundle includes one built-in schema updater:
+
+```
+SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\EmbeddableSchemaUpdater
+```
+
+This updater is automatically available for dependency injection but requires additional configuration to function properly.
+
+If you want to **modify the schema generated for entities containing embedded objects**, implement the following interface:
+
+```
+SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\UpdateEmbeddableSchemaInterface
+```
+
+Then, register your service and tag it as follows:
+
+```yaml
+tags:
+  - { name: 'doctrine.migrations.embeddable_schema_updater' }
+```
+
+---
+
+### 3. Implementing Custom Schema Updaters
+
+For more advanced schema modification logic, you can create your own schema updater by implementing:
+
+```
+SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\SchemaUpdaterInterface
+```
+
+and tagging it as:
+
+```yaml
+tags:
+  - { name: 'doctrine.migrations.schema_updater' }
+```
+
+This allows you to define complex schema transformations that will be automatically included in the Doctrine migration diff.
+
+---
+
+### 4. Further Configuration
+
+For detailed configuration options and customization possibilities, refer to the compiler pass:
+
+```
+SunnyFlail\DoctrineMigrationSchemaUpdater\Symfony\DependencyInjection\CompilerPass\CustomConfigureDependencyFactoryPass
+```
+
+---
+
+✅ **Summary:**
+- Integrates with Doctrine’s migration diff process.
+- Preserves custom schema changes across migrations.
+- Easily extendable via tagged schema updaters.  
