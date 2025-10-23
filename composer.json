@@ -1,0 +1,34 @@
+{
+    "name": "sunnyflail/doctrine-migration-schema-updater",
+    "description": "Simple doctrine migrations overrider",
+    "type": "library",
+    "version": "1.0.0",
+    "require": {
+        "php": "^8.2",
+        "doctrine/migrations": "^3",
+        "doctrine/orm": "^3.5"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3",
+        "squizlabs/php_codesniffer": "^4"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "SunnyFlail\\DoctrineMigrationSchemaUpdater\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "sunnyflail",
+            "email": "sunny.flail@gmail.com"
+        }
+    ],
+    "suggest": {
+        "doctrine/doctrine-migrations-bundle": "For symfony integration",
+        "symfony/console": "For custom console commands"
+    },
+    "config": {
+        "bin-dir": "bin"
+    }
+}
