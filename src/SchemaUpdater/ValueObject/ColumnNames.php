@@ -30,4 +30,9 @@ final readonly class ColumnNames
 
         return null;
     }
+
+    public function implode(string $glue): string
+    {
+        return implode($glue, $this->columns);
+    }
 }

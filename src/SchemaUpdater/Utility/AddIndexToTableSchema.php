@@ -13,6 +13,7 @@ final readonly class AddIndexToTableSchema
     public function __construct(
         private ValidateTableColumns $validateTableColumns,
         private GenerationLogger $logger,
+        private GenerateIndexName $generateIndexName,
     ) {
     }
 
@@ -26,9 +27,9 @@ final readonly class AddIndexToTableSchema
         ?IndexFlags $indexFlags = null,
         ColumnNotFoundPolicyEnum $columnPolicy = ColumnNotFoundPolicyEnum::DO_NOTHING,
     ): void {
-        $indexName ??= sprintf(
-            '%s_idx',
-            implode('_', $columnNames->columns),
+        $indexName ??= $this->generateIndexName->generate(
+            $tableSchema->getName(),
+            $columnNames,
         );
 
         if (

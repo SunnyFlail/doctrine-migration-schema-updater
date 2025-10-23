@@ -13,6 +13,7 @@ final readonly class AddForeignKeyToTableSchema
     public function __construct(
         private ValidateTableColumns $validateTableColumns,
         private GenerationLogger $logger,
+        private GenerateForeignKeyName $generateForeignKeyName,
     ) {
     }
 
@@ -29,10 +30,11 @@ final readonly class AddForeignKeyToTableSchema
         ColumnNotFoundPolicyEnum $localColumnPolicy = ColumnNotFoundPolicyEnum::DO_NOTHING,
         ColumnNotFoundPolicyEnum $targetColumnPolicy = ColumnNotFoundPolicyEnum::DO_NOTHING,
     ): void {
-        $constraintName ??= sprintf(
-            'fk_%s_%s',
+        $constraintName ??= $this->generateForeignKeyName->generate(
             $localTable->getName(),
-            implode('_', $localColumnNames->columns),
+            $targetTable->getName(),
+            $localColumnNames,
+            $targetColumnNames,
         );
 
         if (
