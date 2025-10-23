@@ -23,17 +23,13 @@ Once registered, the bundle is active — but note that it does not alter your s
 
 The bundle includes one built-in schema updater:
 
-```
-SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\EmbeddableSchemaUpdater
-```
+[`SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\EmbeddableSchemaUpdater`](./src/SchemaUpdater/EmbeddableSchemaUpdater.php)
 
 This updater is automatically available for dependency injection but requires additional configuration to function properly.
 
 If you want to **modify the schema generated for entities containing embedded objects**, implement the following interface:
 
-```
-SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\UpdateEmbeddableSchemaInterface
-```
+[`SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\UpdateEmbeddableSchemaInterface`](./src/SchemaUpdater/UpdateEmbeddableSchemaInterface.php)
 
 Then, register your service and tag it as follows:
 
@@ -48,9 +44,7 @@ tags:
 
 For more advanced schema modification logic, you can create your own schema updater by implementing:
 
-```
-SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\SchemaUpdaterInterface
-```
+[`SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\SchemaUpdaterInterface`](./src/SchemaUpdater/SchemaUpdaterInterface.php)
 
 and tagging it as:
 
@@ -65,11 +59,10 @@ This allows you to define complex schema transformations that will be automatica
 
 ### 4. Further Configuration
 
-For detailed configuration options and customization possibilities, refer to the compiler pass and bundle `services.yaml`:
+For detailed configuration options and customization possibilities, refer to the compiler pass and bundle configuration
+[`services.yaml`](./src/Symfony/Resources/config/services.yaml)
 
-```
-SunnyFlail\DoctrineMigrationSchemaUpdater\Symfony\DependencyInjection\CompilerPass\CustomConfigureDependencyFactoryPass
-```
+[`SunnyFlail\DoctrineMigrationSchemaUpdater\Symfony\DependencyInjection\CompilerPass\CustomConfigureDependencyFactoryPass`](./src/Symfony/DependencyInjection/CompilerPass/CustomConfigureDependencyFactoryPass.php)
 
 ---
 
