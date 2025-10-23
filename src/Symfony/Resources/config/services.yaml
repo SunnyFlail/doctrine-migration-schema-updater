@@ -28,7 +28,6 @@ services:
     doctrine.migrations.schema_updater.schema_tool:
         class: SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\CustomSchemaTool
         arguments:
-            $entityManager: '@doctrine.migrations.schema_updater.entity_manager'
             $schemaUpdaters: !tagged_iterator { tag: doctrine.migrations.schema_updater.schema_updater }
 
     SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\EmbeddableSchemaUpdater:
