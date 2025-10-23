@@ -39,7 +39,7 @@ Then, register your service and tag it as follows:
 
 ```yaml
 tags:
-  - { name: 'doctrine.migrations.embeddable_schema_updater' }
+  - { name: 'doctrine.migrations.schema_updater.embeddable_schema_updater' }
 ```
 
 ---
@@ -56,7 +56,7 @@ and tagging it as:
 
 ```yaml
 tags:
-  - { name: 'doctrine.migrations.schema_updater' }
+  - { name: 'doctrine.migrations.schema_updater.schema_updater' }
 ```
 
 This allows you to define complex schema transformations that will be automatically included in the Doctrine migration diff.
@@ -65,7 +65,7 @@ This allows you to define complex schema transformations that will be automatica
 
 ### 4. Further Configuration
 
-For detailed configuration options and customization possibilities, refer to the compiler pass:
+For detailed configuration options and customization possibilities, refer to the compiler pass and bundle `services.yaml`:
 
 ```
 SunnyFlail\DoctrineMigrationSchemaUpdater\Symfony\DependencyInjection\CompilerPass\CustomConfigureDependencyFactoryPass

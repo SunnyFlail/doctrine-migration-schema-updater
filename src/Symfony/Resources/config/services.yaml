@@ -1,0 +1,57 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    doctrine.migrations.overrides.dependency_factory_factory: '@doctrine.migrations.schema_updater.dependency_factory_factory'
+
+    doctrine.migrations.schema_updater.configuration_loader: '@doctrine.migrations.configuration_loader'
+    doctrine.migrations.schema_updater.entity_manager_registry_loader: '@doctrine.migrations.entity_manager_registry_loader'
+    doctrine.migrations.schema_updater.entity_manager: '@doctrine.orm.entity_manager'
+    doctrine.migrations.schema_updater.logger: '@logger'
+    doctrine.migrations.schema_updater.debug_logger: '@logger'
+
+    doctrine.migrations.schema_updater.dependency_factory_factory:
+        class: SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\CustomDependencyFactoryFactory
+        arguments:
+            $configurationLoader: '@doctrine.migrations.schema_updater.configuration_loader'
+            $emLoader: '@doctrine.migrations.schema_updater.entity_manager_registry_loader'
+            $logger: '@doctrine.migrations.schema_updater.logger'
+            $schemaProvider: '@doctrine.migrations.schema_updater.schema_provider'
+
+    doctrine.migrations.schema_updater.schema_provider:
+        class: SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\CustomSchemaProvider
+        arguments:
+            $entityManager: '@doctrine.migrations.schema_updater.entity_manager'
+            $schemaTool: '@doctrine.migrations.schema_updater.schema_tool'
+
+    doctrine.migrations.schema_updater.schema_tool:
+        class: SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\CustomSchemaTool
+        arguments:
+            $entityManager: '@doctrine.migrations.schema_updater.entity_manager'
+            $schemaUpdaters: !tagged_iterator { tag: doctrine.migrations.schema_updater.schema_updater }
+
+    SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\EmbeddableSchemaUpdater:
+        tags: [ doctrine.migrations.schema_updater.schema_updater ]
+        arguments:
+            $embeddableSchemaUpdaters: !tagged_iterator { tag: doctrine.migrations.schema_updater.embeddable_schema_updater }
+
+    SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\Utility\ExtractEmbeddableColumnName:
+        shared: true
+
+    SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\Utility\GenerationLogger:
+        shared: true
+        arguments:
+            $logger: '@doctrine.migrations.schema_updater.debug_logger'
+
+    SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\Utility\ValidateTableColumns:
+        shared: true
+
+    SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\Utility\AddForeignKeyToTableSchema:
+        shared: true
+
+    SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\Utility\AddIndexToTableSchema:
+        shared: true
+
+    SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\Utility\GetEntityTableSchema:
+        shared: true
