@@ -46,6 +46,12 @@ services:
     SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\Utility\ValidateTableColumns:
         shared: true
 
+    SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\Utility\GenerateIndexName:
+        shared: true
+
+    SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\Utility\GenerateForeignKeyName:
+        shared: true
+
     SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\Utility\AddForeignKeyToTableSchema:
         shared: true
 
