@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SunnyFlail\DoctrineMigrationSchemaUpdater\Symfony;
 
-use Doctrine\Bundle\MigrationsBundle\DependencyInjection\CompilerPass\ConfigureDependencyFactoryPass;
+use SunnyFlail\DoctrineMigrationSchemaUpdater\Symfony\DependencyInjection\CompilerPass\CustomConfigureDependencyFactoryPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -17,7 +17,7 @@ class DoctrineSchemaUpdaterBundle extends Bundle
     /** @return void */
     public function build(ContainerBuilder $container)
     {
-        $container->addCompilerPass(new ConfigureDependencyFactoryPass());
+        $container->addCompilerPass(new CustomConfigureDependencyFactoryPass());
     }
 
     public function getPath(): string
