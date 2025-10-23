@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SunnyFlail\DoctrineMigrationSchemaUpdater\Symfony\DependencyInjection\CompilerPass;
 
 use SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\CustomDependencyFactoryFactory;
-use SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\CustomizableSchemaTool;
+use SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\CustomSchemaTool;
 use SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\CustomSchemaProvider;
 use SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\EmbeddableSchemaUpdater;
 use Doctrine\Migrations\DependencyFactory;
@@ -13,10 +13,6 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
-
-if (false === class_exists(CompilerPassInterface::class)) {
-    throw new \LogicException('Compiler pass requires to be used in Symfony framework context');
-}
 
 final class CustomConfigureDependencyFactoryPass implements CompilerPassInterface
 {
@@ -128,7 +124,7 @@ final class CustomConfigureDependencyFactoryPass implements CompilerPassInterfac
         $this->setupDefaultSchemaUpdater($container);
 
         $diDefinition = new Definition(
-            CustomizableSchemaTool::class,
+            CustomSchemaTool::class,
             [
                 new Reference(self::DEFAULT_ENTITY_MANAGER_ALIAS),
                 $this->getReferenceToAllTaggedServices($container, self::SCHEMA_UPDATER_TAG),

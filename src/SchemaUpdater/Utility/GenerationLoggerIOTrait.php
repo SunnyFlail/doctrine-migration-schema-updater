@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\Util;
+namespace SunnyFlail\DoctrineMigrationSchemaUpdater\SchemaUpdater\Utility;
 
 use Symfony\Component\Console\Style\SymfonyStyle;
 
